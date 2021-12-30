@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Person {
+public class Person extends Human{
 
     public String name;
     protected String age;

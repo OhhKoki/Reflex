@@ -13,7 +13,7 @@ public class MethodReflexTest {
 
     /**
      * public Method getMethod(String name, Class<?>... parameterTypes) throws NoSuchMethodException, SecurityException
-     *      获取（指定型参列表 & public 修饰的）成员方法
+     *      获取反射类或其父类中指定（方法名称 & 型参列表）的成员方法（只能获取 public 修饰的成员方法）
      * @throws Exception
      */
     @Test
@@ -21,41 +21,42 @@ public class MethodReflexTest {
         Class<Person> personClass = Person.class;
 
         Method eat1 = personClass.getMethod("eat");
+        // 输出内容：public void com.example.Person.eat()
         System.out.println(eat1);
 
         Method eat2 = personClass.getMethod("eat", String.class);
+        // 输出内容：public void com.example.Person.eat(java.lang.String)
         System.out.println(eat2);
     }
 
     /**
      * public Method[] getMethods() throws SecurityException
-     *      获取所有 public 修饰的成员方法
+     *      获取反射类及其父类中的所有 public 修饰的成员方法
      * @throws Exception
      */
     @Test
     public void test02() throws Exception {
         Class<Person> personClass = Person.class;
         Method[] methods = personClass.getMethods();
-        // 除了构造方法，获取所有 public 修饰的方法方：setter/getter/hashcode/equals，甚至连父类的方法都有
         Arrays.stream(methods).forEach(System.out::println);
     }
 
     /**
      * public Method getDeclaredMethod(String name, Class<?>... parameterTypes) throws NoSuchMethodException, SecurityException
-     *      获取指定型参列表的成员方法
+     *      获取反射类或其父类中指定（方法名称 & 型参列表）的成员方法（public、protected、default、private 都可以获取到）
      * @throws Exception
      */
     @Test
     public void test03() throws Exception {
         Class<Person> personClass = Person.class;
-        // 忽略访问权限修饰符，获取（指定型参列表 & public 修饰的）成员方法
+        // 获取 private 修饰的方法
         Method sleep = personClass.getDeclaredMethod("sleep");
         System.out.println(sleep);
     }
 
     /**
      * public Method[] getDeclaredMethods() throws SecurityException
-     *      获取所有的成员方法
+     *      获取所有的成员方法（public、protected、default、private 都可以获取到）
      */
     @Test
     public void test04() {
